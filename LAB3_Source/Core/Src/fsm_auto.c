@@ -1,0 +1,159 @@
+/*
+ * fsm_auto.c
+ *
+ *  Created on: Nov 1, 2025
+ *      Author: LENOVO
+ */
+
+#include "global.h"
+#include "software_timer.h"
+#include "button.h"
+#include "7seg.h"
+#include "fsm_auto.h"
+#include "main.h"
+
+
+
+void fsm_auto()
+{
+	//Traffic light
+	switch(status1)
+	{
+		case INIT:
+		{
+			setTimer(0, 5);
+			setTimer(1, 3);
+			temp[0] = 5;
+			temp[1] = 3;
+			temp[2] = 2;
+			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+			updateClock2Buffer(0);	//disable the second row of led segment
+			scan7seg();
+			status1 = RED_GREEN;
+			break;
+		}
+		case RED_GREEN:
+		{
+			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
+			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, SET);
+			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+			updateClock2Buffer(0);	//disable the second row of led segment
+			if(isTimerExpired(1) == 1)
+			{
+				setTimer(1, temp[2]);
+				status1 = RED_YELLOW;
+				updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+				updateClock2Buffer(0);	//disable the second row of led segment
+			}
+			if(isButtonPressed(1) == 1)
+			{
+				status1 = INIT_MANUAL;
+			}
+			if(isButtonPressed(2) == 1)
+			{
+				status1 = INIT_CONFIG;
+			}
+			break;
+		}
+		case RED_YELLOW:
+		{
+			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
+			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, SET);
+			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+			updateClock2Buffer(0);	//disable the second row of led segment
+			if(isTimerExpired(1) == 1)
+			{
+				setTimer(1, temp[0]);
+				setTimer(0, temp[1]);
+				status1 = GREEN_RED;
+				updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+				updateClock2Buffer(0);	//disable the second row of led segment
+			}
+			if(isButtonPressed(1) == 1)
+			{
+				status1 = INIT_MANUAL;
+			}
+			if(isButtonPressed(2) == 1)
+			{
+				status1 = INIT_CONFIG;
+			}
+			break;
+		}
+		case GREEN_RED:
+		{
+			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, SET);
+			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
+			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+			updateClock2Buffer(0);	//disable the second row of led segment
+			if(isTimerExpired(0) == 1)
+			{
+				status1 = YELLOW_RED;
+				setTimer(0, temp[2]);
+				updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+				updateClock2Buffer(0);	//disable the second row of led segment
+			}
+			if(isButtonPressed(1) == 1)
+			{
+				status1 = INIT_MANUAL;
+			}
+			if(isButtonPressed(2) == 1)
+			{
+				status1 = INIT_CONFIG;
+			}
+			break;
+		}
+		case YELLOW_RED:
+		{
+			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, SET);
+			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
+			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+			updateClock2Buffer(0);	//disable the second row of led segment
+			if(isTimerExpired(0) == 1)
+			{
+				status1 = RED_GREEN;
+				setTimer(0, temp[0]);
+				setTimer(1, temp[1]);
+				updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
+				updateClock2Buffer(0);	//disable the second row of led segment
+			}
+			if(isButtonPressed(1) == 1)
+			{
+				status1 = INIT_MANUAL;
+			}
+			if(isButtonPressed(2) == 1)
+			{
+				status1 = INIT_CONFIG;
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	//7segment
+	scan7seg();
+}
+
