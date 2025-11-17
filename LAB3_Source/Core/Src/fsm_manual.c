@@ -25,12 +25,7 @@ void fsm_manual()
 		case RED_MANUAL:
 		{
 
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, SET);
+			redOn();
 			if(isButtonPressed(0) == 1)
 			{
 				status1 = R_G_MANUAL;
@@ -49,12 +44,7 @@ void fsm_manual()
 		}
 		case R_G_MANUAL:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			yellowAllOn();
 			if(isTimerExpired(2) == 1)
 			{
 				status1 = GREEN_MANUAL;
@@ -73,12 +63,7 @@ void fsm_manual()
 		}
 		case GREEN_MANUAL:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			greenOn();
 			if(isButtonPressed(0) == 1)
 			{
 				setTimer(2, 2);
@@ -97,12 +82,7 @@ void fsm_manual()
 		}
 		case G_R_MANUAL:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			yellowAllOn();
 			if(isTimerExpired(2) == 1)
 			{
 				status1 = RED_MANUAL;
@@ -121,14 +101,10 @@ void fsm_manual()
 		}
 		case YELLOW_MANUAL_2s:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			reset();
 			if(isTimerExpired(3) == 1)
 			{
-				HAL_GPIO_TogglePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin);
-				HAL_GPIO_TogglePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin);
+				yellowAllOn();
 				setTimer(3, 1);
 			}
 			if(isButtonPressed(3) == 1)

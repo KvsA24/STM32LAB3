@@ -11,7 +11,7 @@
 #include "7seg.h"
 #include "fsm_auto.h"
 #include "main.h"
-
+#include "traffic_light.h"
 
 
 void fsm_auto()
@@ -26,12 +26,7 @@ void fsm_auto()
 			temp[0] = 5;
 			temp[1] = 3;
 			temp[2] = 2;
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			reset();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			scan7seg();
@@ -40,12 +35,7 @@ void fsm_auto()
 		}
 		case RED_GREEN:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			redOn();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
@@ -67,12 +57,7 @@ void fsm_auto()
 		}
 		case RED_YELLOW:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, SET);
+			yellowOn();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
@@ -95,12 +80,7 @@ void fsm_auto()
 		}
 		case GREEN_RED:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			greenOn();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(0) == 1)

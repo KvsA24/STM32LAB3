@@ -10,7 +10,7 @@
 #include "button.h"
 #include "software_timer.h"
 #include "global.h"
-
+#include "traffic_light.h"
 
 
 
@@ -32,12 +32,7 @@ void fsm_config()
 		}
 		case RED_CONFIG:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, SET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			redAllOn();
 			updateClock2Buffer(temp[index]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
@@ -69,12 +64,7 @@ void fsm_config()
 		}
 		case YELLOW_CONFIG:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, SET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+			yellowAllOn();
 			updateClock2Buffer(temp[index]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
@@ -106,12 +96,7 @@ void fsm_config()
 		}
 		case GREEN_CONFIG:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, SET);
+			greenAllOn();
 			updateClock2Buffer(temp[index]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
