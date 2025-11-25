@@ -101,6 +101,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  SCH_AddTask(timerRun, 0, 10);
+  SCH_AddTask(getKeyInput, 0, 10);
+  SCH_AddTask(fsm_auto, 0, 10);
+  SCH_AddTask(fsm_config, 0, 10);
+  SCH_AddTask(fsm_manual, 0, 10);
   while (1)
   {
     /* USER CODE END WHILE */

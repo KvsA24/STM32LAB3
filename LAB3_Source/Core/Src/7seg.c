@@ -174,13 +174,13 @@ void update7SEG(int index)
 }
 void updateClock1Buffer(int value)
 {
-	clock_buffer[0] = value / 10;
-	clock_buffer[1] = value % 10;
+	clock_buffer[0] = value / 1000;
+	clock_buffer[1] = value % 1000;
 }
 void updateClock2Buffer(int value)
 {
-	clock_buffer[2] = value / 10;
-	clock_buffer[3] = value % 10;
+	clock_buffer[2] = value / 10000;
+	clock_buffer[3] = value % 10000;
 }
 void scan7seg()
 {

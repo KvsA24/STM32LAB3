@@ -25,16 +25,16 @@ void fsm_manual()
 		case RED_MANUAL:
 		{
 
-			redOn();
+			Red_Green();
 			if(isButtonPressed(0) == 1)
 			{
 				status1 = R_G_MANUAL;
-				setTimer(2, 2);
+				setTimer(2, 2000);
 			}
 			if(isButtonLongPressed(0) == 1)
 			{
 				status1 = YELLOW_MANUAL_2s;
-				setTimer(3, 1);
+				setTimer(3, 1000);
 			}
 			if(isButtonPressed(3) == 1)
 			{
@@ -53,7 +53,7 @@ void fsm_manual()
 			if(isButtonLongPressed(0) == 1)
 			{
 				status1 = YELLOW_MANUAL_2s;
-				setTimer(3, 1);
+				setTimer(3, 1000);
 			}
 			if(isButtonPressed(3) == 1)
 			{
@@ -63,16 +63,16 @@ void fsm_manual()
 		}
 		case GREEN_MANUAL:
 		{
-			greenOn();
+			Green_Red();
 			if(isButtonPressed(0) == 1)
 			{
-				setTimer(2, 2);
+				setTimer(2, 2000);
 				status1 = G_R_MANUAL;
 			}
 			if(isButtonLongPressed(0) == 1)
 			{
 				status1 = YELLOW_MANUAL_2s;
-				setTimer(3, 1);
+				setTimer(3, 1000);
 			}
 			if(isButtonPressed(3) == 1)
 			{
@@ -91,7 +91,7 @@ void fsm_manual()
 			if(isButtonLongPressed(0) == 1)
 			{
 				status1 = YELLOW_MANUAL_2s;
-				setTimer(3, 1);
+				setTimer(3, 1000);
 			}
 			if(isButtonPressed(3) == 1)
 			{
@@ -105,7 +105,7 @@ void fsm_manual()
 			if(isTimerExpired(3) == 1)
 			{
 				yellowAllOn();
-				setTimer(3, 1);
+				setTimer(3, 1000);
 			}
 			if(isButtonPressed(3) == 1)
 			{

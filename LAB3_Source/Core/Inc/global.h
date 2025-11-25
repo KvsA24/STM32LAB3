@@ -29,6 +29,8 @@
 #define YELLOW_CONFIG 33
 #define GREEN_CONFIG 34
 
+#define CONFIRM 41
+
 #define MAX_INDEX 10
 
 extern int timerCycle;

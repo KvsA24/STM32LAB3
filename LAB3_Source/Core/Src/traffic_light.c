@@ -80,3 +80,13 @@ void greenAllOn(void)
 	HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, SET);
 	HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
 }
+
+void yellowBlinky(void)
+{
+	HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
+	HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
+	HAL_GPIO_TogglePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin);
+	HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, RESET);
+	HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
+	HAL_GPIO_TogglePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin);
+}

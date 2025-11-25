@@ -11,7 +11,7 @@
 
 void setTimer(int index, int value)
 {
-	timer_counter[index] = (value * 1000) / timerCycle;
+	timer_counter[index] = value / timerCycle;
 	timer_flag[index] = 0;
 }
 

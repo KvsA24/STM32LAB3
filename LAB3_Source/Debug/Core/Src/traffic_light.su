@@ -6,3 +6,4 @@ traffic_light.c:47:6:reset	8	static
 traffic_light.c:56:6:redAllOn	8	static
 traffic_light.c:65:6:yellowAllOn	8	static
 traffic_light.c:74:6:greenAllOn	8	static
+traffic_light.c:84:6:yellowBlinky	8	static

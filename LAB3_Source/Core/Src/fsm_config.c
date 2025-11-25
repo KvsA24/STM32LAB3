@@ -14,7 +14,7 @@
 
 
 
-static uint8_t index = 0;
+static uint8_t count = 0;
 
 
 
@@ -26,26 +26,26 @@ void fsm_config()
 	{
 		case INIT_CONFIG:
 		{
-			updateClock2Buffer(temp[index]);
+			updateClock2Buffer(temp[0]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			status1 = RED_CONFIG;
 		}
 		case RED_CONFIG:
 		{
 			redAllOn();
-			updateClock2Buffer(temp[index]);
+			updateClock2Buffer(temp[0]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
 			{
-				temp[0]++;
-				if(temp[0] >= 99)
+				temp[0]+=1000;
+				if(temp[0] >= 99000)
 				{
-					temp[0] = 99;
+					temp[0] = 99000;
 				}
 			}
 			if(isButtonPressed(1) == 1)
 			{
-				temp[0]--;
+				temp[0]-=1000;
 				if(temp[0] <= 0)
 				{
 					temp[0] = 0;
@@ -59,25 +59,24 @@ void fsm_config()
 			{
 				status1 = INIT;
 			}
-			index = 0;
 			break;
 		}
 		case YELLOW_CONFIG:
 		{
 			yellowAllOn();
-			updateClock2Buffer(temp[index]);
+			updateClock2Buffer(temp[2]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
 			{
-				temp[2]++;
-				if(temp[2] >= 99)
+				temp[2]+=1000;
+				if(temp[2] >= 99000)
 				{
-					temp[2] = 99;
+					temp[2] = 99000;
 				}
 			}
 			if(isButtonPressed(1) == 1)
 			{
-				temp[2]--;
+				temp[2]-=1000;
 				if(temp[2] <= 0)
 				{
 					temp[2] = 0;
@@ -91,25 +90,24 @@ void fsm_config()
 			{
 				status1 = INIT;
 			}
-			index = 2;
 			break;
 		}
 		case GREEN_CONFIG:
 		{
 			greenAllOn();
-			updateClock2Buffer(temp[index]);
+			updateClock2Buffer(temp[1]);
 			updateClock1Buffer(0);	//disable the first row of led segment
 			if(isButtonPressed(0) == 1)
 			{
-				temp[1]++;
-				if(temp[1] >= 99)
+				temp[1]+=1000;
+				if(temp[1] >= 99000)
 				{
-					temp[1] = 99;
+					temp[1] = 99000;
 				}
 			}
 			if(isButtonPressed(1) == 1)
 			{
-				temp[1]--;
+				temp[1]-=1000;
 				if(temp[1] <= 0)
 				{
 					temp[1] = 0;
@@ -117,23 +115,48 @@ void fsm_config()
 			}
 			if(isButtonPressed(2) == 1)
 			{
-				if(temp[1] + temp[2] != temp[0])
-				{
-					status1 = INIT;
-				}
-				else
-				{
-					setTimer(0, temp[0]);
-					setTimer(1, temp[1]);
-					status1 = RED_GREEN;
-				}
+				setTimer(4, 500);
+				status1 = CONFIRM;
+				count = 0;
 			}
 			if(isButtonPressed(3) == 1)
 			{
 				status1 = INIT;
 			}
-			index = 1;
 			break;
+		}
+		case CONFIRM:
+		{
+			if(temp[1] + temp[2] != temp[0])
+			{
+				if(isTimerExpired(4) == 1)
+				{
+					if(count < 4)
+					{
+						yellowBlinky();
+					}
+					else
+					{
+						status1 = INIT;
+					}
+				}
+			}
+			else
+			{
+				if(isTimerExpired(3) == 1)
+				{
+					if(count < 2)
+					{
+						yellowBlinky();
+					}
+					else
+					{
+						setTimer(0, temp[0]);
+						setTimer(1, temp[1]);
+						status1 = RED_GREEN;
+					}
+				}
+			}
 		}
 		default:
 		{
