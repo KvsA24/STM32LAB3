@@ -1,0 +1,6 @@
+7seg.c:12:6:display7SEG	16	static
+7seg.c:129:6:update7SEG	16	static
+7seg.c:175:6:updateClock1Buffer	16	static
+7seg.c:180:6:updateClock2Buffer	16	static
+7seg.c:185:6:scan7seg	8	static
+7seg.c:203:6:clear7seg	8	static

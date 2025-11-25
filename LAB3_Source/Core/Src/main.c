@@ -63,7 +63,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-SCH_AddTask(timerRun, 0, 10);
+
 /* USER CODE END 0 */
 
 /**

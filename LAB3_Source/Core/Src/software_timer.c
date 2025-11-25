@@ -7,7 +7,6 @@
 
 #include "software_timer.h"
 #include "global.h"
-#include "input_processing.h"
 #include "main.h"
 
 void setTimer(int index, int value)

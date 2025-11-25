@@ -35,7 +35,7 @@ void fsm_auto()
 		}
 		case RED_GREEN:
 		{
-			redOn();
+			Red_Green();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
@@ -57,7 +57,7 @@ void fsm_auto()
 		}
 		case RED_YELLOW:
 		{
-			yellowOn();
+			Red_Yellow();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
@@ -80,7 +80,7 @@ void fsm_auto()
 		}
 		case GREEN_RED:
 		{
-			greenOn();
+			Green_Red();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(0) == 1)
@@ -102,12 +102,7 @@ void fsm_auto()
 		}
 		case YELLOW_RED:
 		{
-			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_GRE1_GPIO_Port, LED_GRE1_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB1_GPIO_Port, LED_AMB1_Pin, SET);
-			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-			HAL_GPIO_WritePin(LED_GRE2_GPIO_Port, LED_GRE2_Pin, RESET);
-			HAL_GPIO_WritePin(LED_AMB2_GPIO_Port, LED_AMB2_Pin, RESET);
+			Yellow_Red();
 			updateClock1Buffer((timer_counter[0] * timerCycle + 500)/ 1000);
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(0) == 1)
