@@ -27,7 +27,7 @@ void fsm_auto()
 			temp[1] = 3000;
 			temp[2] = 2000;
 			reset();
-			updateClock1Buffer((timer_counter[0] + 25));
+			updateClock1Buffer((timer_counter[0] + 50));
 			updateClock2Buffer(0);	//disable the second row of led segment
 			scan7seg();
 			status1 = RED_GREEN;
@@ -36,13 +36,13 @@ void fsm_auto()
 		case RED_GREEN:
 		{
 			Red_Green();
-			updateClock1Buffer((timer_counter[0] + 25));
+			updateClock1Buffer((timer_counter[0] + 50));
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
 			{
 				setTimer(1, temp[2]);
 				status1 = RED_YELLOW;
-				updateClock1Buffer((timer_counter[0] + 25));
+				updateClock1Buffer((timer_counter[0] + 50));
 				updateClock2Buffer(0);	//disable the second row of led segment
 			}
 			if(isButtonPressed(1) == 1)
@@ -58,14 +58,14 @@ void fsm_auto()
 		case RED_YELLOW:
 		{
 			Red_Yellow();
-			updateClock1Buffer((timer_counter[0] + 25));
+			updateClock1Buffer((timer_counter[0] + 50));
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(1) == 1)
 			{
 				setTimer(1, temp[0]);
 				setTimer(0, temp[1]);
 				status1 = GREEN_RED;
-				updateClock1Buffer((timer_counter[0] + 25));
+				updateClock1Buffer((timer_counter[0] + 50));
 				updateClock2Buffer(0);	//disable the second row of led segment
 			}
 			if(isButtonPressed(1) == 1)
@@ -81,13 +81,13 @@ void fsm_auto()
 		case GREEN_RED:
 		{
 			Green_Red();
-			updateClock1Buffer((timer_counter[0] + 25));
+			updateClock1Buffer((timer_counter[0] + 50));
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(0) == 1)
 			{
 				status1 = YELLOW_RED;
 				setTimer(0, temp[2]);
-				updateClock1Buffer((timer_counter[0] + 25));
+				updateClock1Buffer((timer_counter[0] + 50));
 				updateClock2Buffer(0);	//disable the second row of led segment
 			}
 			if(isButtonPressed(1) == 1)
@@ -103,14 +103,14 @@ void fsm_auto()
 		case YELLOW_RED:
 		{
 			Yellow_Red();
-			updateClock1Buffer((timer_counter[0] + 25));
+			updateClock1Buffer((timer_counter[0] + 50));
 			updateClock2Buffer(0);	//disable the second row of led segment
 			if(isTimerExpired(0) == 1)
 			{
 				status1 = RED_GREEN;
 				setTimer(0, temp[0]);
 				setTimer(1, temp[1]);
-				updateClock1Buffer((timer_counter[0] + 25));
+				updateClock1Buffer((timer_counter[0] + 50));
 				updateClock2Buffer(0);	//disable the second row of led segment
 			}
 			if(isButtonPressed(1) == 1)

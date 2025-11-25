@@ -63,16 +63,7 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void fsm_select()
-{
-	switch(status1)
-	{
-		case INIT:
-		{
 
-		}
-	}
-}
 /* USER CODE END 0 */
 
 /**
@@ -110,9 +101,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_AddTask(timerRun, 0, 10);
-  SCH_AddTask(getKeyInput, 0, 10);
-  SCH_AddTask(update7SEG, 0, 25);
+  SCH_AddTask(timerRun, 0, 1);
+  SCH_AddTask(getKeyInput, 0, 1);
+  SCH_AddTask(fsm_auto, 0, 10);
+  SCH_AddTask(fsm_config, 0, 10);
+  SCH_AddTask(fsm_manual, 0, 10);
   while (1)
   {
     /* USER CODE END WHILE */

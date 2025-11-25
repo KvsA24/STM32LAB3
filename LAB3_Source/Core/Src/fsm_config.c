@@ -134,6 +134,7 @@ void fsm_config()
 					if(count < 4)
 					{
 						yellowBlinky();
+						count++;
 					}
 					else
 					{
@@ -143,11 +144,12 @@ void fsm_config()
 			}
 			else
 			{
-				if(isTimerExpired(3) == 1)
+				if(isTimerExpired(4) == 1)
 				{
 					if(count < 2)
 					{
 						yellowBlinky();
+						count++;
 					}
 					else
 					{

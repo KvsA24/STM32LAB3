@@ -15,4 +15,3 @@ int temp[MAX_INDEX] = {0};
 int segScan = 0;
 int status1 = INIT;
 
-
